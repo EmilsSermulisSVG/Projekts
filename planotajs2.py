@@ -14,6 +14,7 @@ def iegut_datus(): #Funkcija kura iegūst datumu, laiku un pārbauda vai tie ir 
             datums_formata = datetime.strptime(datums, format) #pārveido uz datetime tipu 
             pasreizejs_datums = datetime.now().strftime("%Y-%m-%d")#iegūst pašreizējo datumu 
             pasreizejs_datums = datetime.strptime(pasreizejs_datums, format) #pārveido uz datetime tipu 
+            datums_formatets = datetime.strftime(datums_formata,format)
             if datums_formata < pasreizejs_datums:
                 print("Datums nevar būt mazāks par šodienas datumu.")
                 continue
@@ -21,7 +22,7 @@ def iegut_datus(): #Funkcija kura iegūst datumu, laiku un pārbauda vai tie ir 
                 break
         except ValueError:
             print('Nepareizs datu formāts. Lūdzu, ievadiet datumu vēlreiz')
-    plans.update({"datums":datums}) #datumu ieliek dict plans
+    plans.update({"datums":datums_formatets}) #datumu ieliek dict plans
     while True: #igūst laiku un plānu
         try:
             laiks = input("Ievadiet laiku kad šīs plāns notiks formā HH-MM: ")
