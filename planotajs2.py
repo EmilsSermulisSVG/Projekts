@@ -147,7 +147,7 @@ def galvenais():
         print('1)pievienot planus\n2)apskatīt,rediģēt plānus\nstop = stop')
         darbiba = input('ko jūs gribat darīt: ')
         if darbiba == 'stop':
-            exit('paldies par litošanu')
+            exit('paldies par lietošanu')
         elif darbiba == '1':
             saglabat_datus(iegut_datus())
         elif darbiba == '2':
