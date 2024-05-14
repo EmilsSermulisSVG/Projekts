@@ -1,6 +1,6 @@
 from datetime import datetime
 
-print('labdien\n---------------\n')
+print('labdien\nšīs programmas mērķis ir palīdzēt plānot laiku\n---------------\n')
 
 def iegut_datus(): #Funkcija kura iegūst datumu, laiku un pārbauda vai tie ir pareizi formatēti un vai nav pagātnē, kā arī iegūst plānu
     plans = {
@@ -94,6 +94,8 @@ def redige_failu(datums):
                 for line in file.readlines():
                     atslega, vertiba = line.strip().split(' : ')#atdala laiku un plānu
                     plani[atslega] = vertiba
+                if bool(plani) == False:
+                    exit('datumā nav plāni')
             sakartota = dict(sorted(plani.items()))
             for key, value in sakartota.items():
                 print(key, ":", value) #parāda visus plānus vienā datumā
@@ -119,6 +121,8 @@ def redige_failu(datums):
                 for line in file.readlines():
                     atslega, vertiba = line.strip().split(' : ')#atdala laiku no plāna
                     plani[atslega] = vertiba
+                if bool(plani) == False:
+                    exit('datumā nav plāni')
             sakartota = dict(sorted(plani.items()))
             for key, value in sakartota.items():
                 print(key, ":", value)#parāda visus plānus vienā datumā
