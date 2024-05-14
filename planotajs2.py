@@ -66,7 +66,11 @@ def apskatit_datus(): # funkcija izvada iepriekš ievadītā datuma plānus(jā 
         try:
             
             datums = input("Kuru datumu vēlaties apskatīt? datums: YYYY-MM-DD:")
-            
+            try:
+                pareizi = bool(datetime.strptime(datums,"%Y-%m-%d")) # pārbauda vai ir pareizs datu tips  
+            except ValueError:                              
+                print("Nepareizi dati! Ievadi pareizus")
+                continue
             try:
                 plani = {}
                 with open(datums+'.txt', 'r',encoding='utf8') as file:
@@ -82,8 +86,8 @@ def apskatit_datus(): # funkcija izvada iepriekš ievadītā datuma plānus(jā 
                     break
                 else:
                     break
-            except FileNotFoundError:         # ja ieraksta datumu kurš nav
-                print("Tāds datums nav!")
+            except FileNotFoundError:         
+                print("Šajā datumā jūs neesat neko ieplānojis ievadiet datumu kurā esat!")
 
         except ValueError:
             print("Nepareizi dati! Vadi vēlreiz!!!")
