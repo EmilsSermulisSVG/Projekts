@@ -14,7 +14,7 @@ def iegut_datus(): #Funkcija kura iegūst datumu, laiku un pārbauda vai tie ir 
             datums_formata = datetime.strptime(datums, format) #pārveido uz datetime tipu 
             pasreizejs_datums = datetime.now().strftime("%Y-%m-%d")#iegūst pašreizējo datumu 
             pasreizejs_datums = datetime.strptime(pasreizejs_datums, format) #pārveido uz datetime tipu 
-            datums_formatets = datetime.strftime(datums_formata,format)
+            datums_formatets = datetime.strftime(datums_formata,format) #formatē pareizi ar nullēm pirms viencipara skaitļa
             if datums_formata < pasreizejs_datums:
                 print("Datums nevar būt mazāks par šodienas datumu.")
                 continue
@@ -28,19 +28,31 @@ def iegut_datus(): #Funkcija kura iegūst datumu, laiku un pārbauda vai tie ir 
             laiks = input("Ievadiet laiku kad šīs plāns notiks formā HH-MM: ")
             format = "%H-%M" #laika formatējum
             pareizs = bool(datetime.strptime(laiks, format)) #pārbauda vai ir pareizs formatējum
-            datums_formata = datetime.strptime(laiks, format) #pārveido uz datetime tipu 
+            laiks_formats = datetime.strptime(laiks, format) #pārveido uz datetime tipu 
+            laiks_formatets = datetime.strftime(laiks_formats, format) #formatē pareizi ar nullēm pirms viencipara skaitļa
             if pareizs != True:#ja ir nepareizi formatēts tad sāk no sākuma while ciklu
                 print("Nepareizs datu formāts. Lūdzu, ievadiet datumu vēlreiz")
                 continue
             planots = input("Ievadiet ko jūs planojat darīt šajā laikā? ") #iegūst plānu
-            plans.update({laiks:planots}) # ievieto laiku kā key un plānu kā value
+            plans.update({laiks_formatets:planots}) # ievieto laiku kā key un plānu kā value
             vai_turp = input("Vai ir vēl plāni(j/n)?") #vai lietotājs grib pierakstīt vēl plānus
-            if vai_turp == "j":
-                continue
-            elif vai_turp == "n":
-                break
+            while True:
+                vai_turp = input("Vai ir vēl plāni(j/n)?: ") #vai lietotājs grib pierakstīt vēl plānus
+                if vai_turp == "j":
+                    vai_turp = True
+                    break
+                elif vai_turp == "n":
+                    vai_turp = False
+                    break
+                else:
+                    print("Lūdzu ierakstiet j vai n.")
+                    continue 
         except ValueError:
             print('Nepareizs datu formāts. Lūdzu, ievadiet laiku vēlreiz')
+        if vai_turp == True:
+            continue
+        elif vai_turp == False:
+            break
     return plans
 
 def saglabat_datus(plans): #sglabā datus pēc formāta "laiks : plans"
