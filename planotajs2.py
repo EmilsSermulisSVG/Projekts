@@ -97,13 +97,15 @@ def apskatit_datus(): # funkcija izvada iepriekš ievadītā datuma plānus(jā 
 
 def redige_failu(datums):
     while True:
-        darbiba = int(input('kā jūs gribat rediģēt?\n1)Pievienot plānu\n2)Izdzēst planu\n3)Rediģēt plānu\nAtbildēt ar (1/2/3): '))
-
+        darbiba = int(input('----------------\nkā jūs gribat rediģēt?\n1)Pievienot plānu\n2)Izdzēst planu\n3)Rediģēt plānu\nAtbildēt ar (1/2/3): '))
+        print('----------------')
         if darbiba == 1: #pievieno plānu failam
             with open(datums+'.txt','a',encoding='utf8') as fails:
                 laiks = input('ievadiet laiku (hh-mm): ')
                 plans = input('ievadiet plānu: ')
                 fails.write(f"{laiks} : {plans}\n")#pievieno
+                break
+
 
         elif darbiba == 2:#izdzēš plānu no faila
             plani = {}
@@ -112,12 +114,14 @@ def redige_failu(datums):
                     atslega, vertiba = line.strip().split(' : ')#atdala laiku un plānu
                     plani[atslega] = vertiba
                 if bool(plani) == False:
-                    exit('datumā nav plāni')
+                    print('datumā nav plāni')
+                    break
             sakartota = dict(sorted(plani.items()))
             for key, value in sakartota.items():
                 print(key, ":", value) #parāda visus plānus vienā datumā
             while True:
                 laiks_dzest = input('kuru laiku jus gribat izdzest: ')
+                print('----------------')
                 if laiks_dzest in sakartota.keys():#parbauda vai ir tāds laiks
                     del sakartota[laiks_dzest]
                     with open(datums+'.txt','w',encoding='utf8') as fails:
@@ -127,7 +131,7 @@ def redige_failu(datums):
                         with open(datums+'.txt','a',encoding='utf8') as fails:
                             darbs = (key+" : "+value+'\n')
                             fails.write(darbs)#pievieno visus datus failam
-                    print('\n-------------\n')
+                    print('\n----------------\n')
                     break
                 else:
                     print('ievadiet pareizu laiku')
@@ -139,7 +143,8 @@ def redige_failu(datums):
                     atslega, vertiba = line.strip().split(' : ')#atdala laiku no plāna
                     plani[atslega] = vertiba
                 if bool(plani) == False:
-                    exit('datumā nav plāni')
+                    print('datumā nav plāni')
+                    break
             sakartota = dict(sorted(plani.items()))
             for key, value in sakartota.items():
                 print(key, ":", value)#parāda visus plānus vienā datumā
@@ -155,13 +160,14 @@ def redige_failu(datums):
                         with open(datums+'.txt','a',encoding='utf8') as fails:
                             darbs = (key+" : "+value+'\n')
                             fails.write(darbs)#plānus ieraksta failā
-                    print('\n-------------\n')
+                    print('\n----------------\n')
                     break
                 else:
                     print('ievadiet pareizu laiku')
             break
         else:
             print('Ievadiet(1/2/3)')
+
 
 def galvenais():
     while True:
